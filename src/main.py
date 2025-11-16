@@ -1,18 +1,6 @@
 import os
 import shutil
-from textnode import TextNode
-from textnode import TextType
-from leafnode import LeafNode
-from parentnode import ParentNode
-from blocktype import (
-    BlockType,
-    block_to_block_type
-)
-from inline_markdown import (
-    split_nodes_delimiter,
-    split_nodes_image,
-    split_nodes_link
-)
+
 import copy_static
 
 
@@ -33,11 +21,13 @@ def main():
 
     copy_static.static_to_public("")
 
-
-def extract_title(markdown):
-    pass
-
-
+    # Generate files test
+    copy_static.generate_page(
+        os.path.join(abs_path, "content/index.md"),
+        os.path.join(abs_path, "template.html"),
+        os.path.join(abs_path, "public/index.html")
+    )
+ 
 
 if __name__ == "__main__":
     main()

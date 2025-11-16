@@ -1,6 +1,11 @@
 import os
 import shutil
 
+from blocktype import (
+    markdown_to_html_node,
+    extract_title
+)
+
 def static_to_public(path):
     static_path = os.path.join(os.path.abspath(os.getcwd()),"static", path)
     public_path = os.path.join(os.path.abspath(os.getcwd()),"public", path)
@@ -15,5 +20,27 @@ def static_to_public(path):
             os.mkdir(directory_path)
             static_to_public(os.path.join(path, content))
             
+
+def generate_page(from_path, template_path, dest_path):
+    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
+    with open(from_path) as f:
+        markdown = f.read()
+    with open(template_path) as f:
+        template = f.read()
+
+    html_string = markdown_to_html_node(markdown).to_html()
+    title = extract_title(html_string)
+
+    new_html = template.replace("{{ Title }}", title)
+    new_html = new_html.replace("{{ Content }}", html_string)
+
+    path = os.path.dirname(dest_path)
+    os.makedirs(path, exist_ok=True)
+
+    with open(dest_path, "w") as f:
+        f.write(new_html)
     
+    
+       
+        
     

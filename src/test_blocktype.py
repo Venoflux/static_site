@@ -1,7 +1,8 @@
 import unittest
 from blocktype import (
     BlockType,
-    block_to_block_type
+    block_to_block_type,
+    extract_title
 )
 
 class TestBlockType(unittest.TestCase):
@@ -39,3 +40,7 @@ class TestBlockType(unittest.TestCase):
     def test_empty_string(self):
         block_type = block_to_block_type("")
         self.assertEqual(block_type, BlockType.PARAGRAPH)
+
+    def test_extract_title(self):
+        title = extract_title("# Hello ")
+        self.assertEqual(title, "Hello")

@@ -18,6 +18,14 @@ class BlockType(Enum):
     ORDERED_LIST = 5
 
 
+def extract_title(markdown):
+    lines = markdown.split('\n')
+    for line in lines:
+        if line.startswith("# "):
+            return line[2:].strip()
+    return "Title"
+
+    
 def markdown_to_blocks(markdown):
     lines = [line if line.strip() else "" for line in markdown.split("\n")]
     cleaned_markdown = "\n".join(lines)
@@ -123,7 +131,7 @@ def markdown_to_html_node(markdown):
                 clean_markdown = ""
                 lines = block.split('\n')
                 for line in lines:
-                    if not line.startswith("> "):
+                    if not line.startswith(">"):
                         raise ValueError("invalid quote block")
                     clean_markdown += line[2:] + " "
                 clean_markdown = clean_markdown.strip()
