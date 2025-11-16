@@ -1,3 +1,5 @@
+import os
+import shutil
 from textnode import TextNode
 from textnode import TextType
 from leafnode import LeafNode
@@ -11,11 +13,26 @@ from inline_markdown import (
     split_nodes_image,
     split_nodes_link
 )
+import copy_static
 
 
 def main():
-    text_object = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
-    print(text_object)
+    abs_path = os.path.abspath(os.getcwd())
+    listdir = os.listdir(os.path.abspath(os.getcwd()))
+
+    if "public" in listdir:
+        print("Deleting public directory...")
+        shutil.rmtree("./public")
+
+    if "static" not in listdir:
+        raise Exception("static file not found")
+    
+    print("Creating public directory...")
+    public_path = os.path.join(abs_path, "public")
+    os.mkdir(public_path)
+
+    copy_static.static_to_public("")
+
 
 
 def text_node_to_html_node(text_node):
@@ -77,6 +94,7 @@ def markdown_to_html_node(markdown):
                 header_text = " ".join(split_header[1:])
                 children = text_to_children(header_text)
                 html_nodes.append(ParentNode(tag=f"h{header_level}", children=children))
+                
             case BlockType.CODE:
                 if not block.startswith("```") or not block.endswith("```"):
                     raise ValueError("invalid code block")
@@ -85,6 +103,7 @@ def markdown_to_html_node(markdown):
                 child = text_node_to_html_node(raw_text_node)
                 code = ParentNode("code", [child])
                 html_nodes.append(ParentNode("pre", [code]))
+                
             case BlockType.QUOTE:
                 clean_markdown = ""
                 lines = block.split('\n')
@@ -95,6 +114,7 @@ def markdown_to_html_node(markdown):
                 clean_markdown = clean_markdown.strip()
                 children = text_to_children(clean_markdown)
                 html_nodes.append(ParentNode("blockquote", children))
+                
             case BlockType.UNORDERED_LIST:
                 lines = block.split("\n")
                 html_items = []
@@ -105,6 +125,7 @@ def markdown_to_html_node(markdown):
                     children = text_to_children(text)
                     html_items.append(ParentNode("li", children))
                 html_nodes.append(ParentNode("ul", html_items))
+                
             case BlockType.ORDERED_LIST:
                 items = block.split("\n")
                 html_items = []
@@ -113,6 +134,7 @@ def markdown_to_html_node(markdown):
                     children = text_to_children(text)
                     html_items.append(ParentNode("li", children))
                 html_nodes.append(ParentNode("ol", html_items))
+                
             case _:
                 lines = block.split("\n")
                 paragraph = " ".join(lines)
