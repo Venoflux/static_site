@@ -1,7 +1,11 @@
 import re
 from typing import Text
+from htmlnode import HTMLNode
 from textnode import TextNode, TextType
-
+from blocktype import (
+    BlockType,
+    block_to_block_type
+)
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
@@ -45,8 +49,6 @@ def split_nodes_image(old_nodes):
                 split_nodes.append(TextNode(member, TextType.TEXT))
         new_nodes.extend(split_nodes)
     return new_nodes
-
-
 
 
 def split_nodes_link(old_nodes):
