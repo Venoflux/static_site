@@ -1,7 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType
-from main import text_node_to_html_node, text_to_textnodes
+from blocktype import text_node_to_html_node, text_to_textnodes
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
