@@ -7,7 +7,6 @@ wheels/
 *.egg-info
 
 # Generated folder
-public/
 
 # Virtual environments
 .venv
