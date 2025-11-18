@@ -6,7 +6,7 @@ import copy_static
 
 
 def main():
-    base_path = sys.argv[0]
+    base_path = sys.argv[1]
     if not base_path:
         base_path = "/"
         
