@@ -21,11 +21,11 @@ def main():
 
     copy_static.static_to_public("")
 
-    # Generate files test
-    copy_static.generate_page(
-        os.path.join(abs_path, "content/index.md"),
+    # Generate files
+    copy_static.generate_pages_recursive(
+        os.path.join(abs_path, "content"),
         os.path.join(abs_path, "template.html"),
-        os.path.join(abs_path, "public/index.html")
+        os.path.join(abs_path, "public")
     )
  
 
