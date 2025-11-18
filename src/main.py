@@ -8,7 +8,9 @@ import copy_static
 def main():
     base_path = sys.argv[1]
     if not base_path:
-        base_path = "/"
+        base_path = ""
+
+    print(base_path)
         
     abs_path = os.path.abspath(os.getcwd())
     listdir = os.listdir(os.path.abspath(os.getcwd()))
