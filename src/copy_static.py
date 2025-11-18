@@ -54,7 +54,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, bas
             new_file_name += ".html"
             new_dest_path = os.path.join(dest_dir_path, new_file_name)
             generate_page(current_path, template_path, new_dest_path, base_path)
-        elif os.path.isdir:
+        elif os.path.isdir(current_path):
             os.makedirs(dest_dir_path, exist_ok=True)
             generate_pages_recursive(current_path, template_path, os.path.join(dest_dir_path, content), base_path)
     
